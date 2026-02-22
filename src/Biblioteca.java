@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Biblioteca {
@@ -68,6 +71,23 @@ public class Biblioteca {
         }
         if (!encontrou) {
             System.out.println("Livro não encontrado");
+        }
+    }
+
+    public void salvarDados() {
+        // O 'try' tenta executar essa ação "perigosa" (criar um arquivo no Windows)
+        try (BufferedWriter escritor = new BufferedWriter(new FileWriter("banco_de_dados.txt"))) {
+
+            for (Livro livro : this.acervo) {
+                String linha = livro.getId() + "," + livro.getTitulo() + "," + livro.getAutor() + "," + livro.isDisponivel();
+                escritor.write(linha);
+                escritor.newLine();
+            }
+            System.out.println("Dados salvos com sucesso no HD!");
+
+        } catch (IOException e) {
+            // Se o Windows barrar a criação do arquivo, o programa não 'crasha'. Ele cai aqui:
+            System.out.println("Opa, deu um erro ao tentar salvar: " + e.getMessage());
         }
     }
 }
