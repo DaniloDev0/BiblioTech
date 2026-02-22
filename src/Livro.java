@@ -15,6 +15,19 @@ public class Livro {
         this.disponivel = true;
     }
 
+    // Construtor exclusivo para restaurar livros do Banco de Dados
+    public Livro(int id, String titulo, String autor, boolean disponivel) {
+        this.id = id;
+        this.titulo = titulo;
+        this.autor = autor;
+        this.disponivel = disponivel;
+
+        // Atualiza o contador da classe para não gerar IDs repetidos nos próximos livros novos
+        if (id > contador) {
+            contador = id;
+        }
+    }
+
     public String getTitulo() {
         return titulo;
     }
